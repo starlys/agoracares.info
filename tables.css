@@ -1,0 +1,36 @@
+/* CSS Document */
+caption {
+	font-size: 1.5em; /* 18px */
+	line-height: 1em; /* 18px */
+	margin-top: 1em;
+	margin-bottom: 0em;
+}
+table, thead, tbody, tr, th, td {
+	font-size:1em;
+	line-height: 1.5em;
+}
+table {
+	border:0px;
+	border-collapse:collapse;
+}
+tr {
+	background-color:#FFF;
+}
+td, th {
+/* replace standard border with zero border */
+	border:0px ;
+	padding-left:3px;
+	padding-right:3px;
+	padding-bottom:0.25em;
+}
+th {
+	color: #fff;
+	background: #069;
+}
+thead th {
+	color: #fff;
+}
+thead td {
+	background-color:#ddd;
+}
+
