@@ -25,9 +25,9 @@ if (!$settings_res) db_error ('proc page staff 1',$settings_qry);
 
 if ($_POST['suicide']) {
 	$page_type = 1;
-	$message = $_SESSION['display_name']. ": SUICIDE IN PROGRESS: ";
+	$message = $_SESSION['display_name']. ": EMERGENCY HELP NEEDED: ";
 	if (isset($_POST['suicide_text'])) $message .= $text;
-	$subject = "SUICIDE IN PROGRESS";
+	$subject = "EMERGENCY HELP NEEDED";
 	email_admins ($message, $subject, '2');
 	redirect ('page_emergency_sent.php');
 }
