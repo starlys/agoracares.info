@@ -16,6 +16,12 @@ Check type of page
 //error_reporting(E_ALL);
 //ini_set('display_errors', true);
 
+// Your Account SID and Auth Token from twilio.com/console
+$account_sid = '';
+$auth_token = '';
+
+// A Twilio number you own with SMS capabilities
+$twilio_number = "+15052073240";
 
 if (isset($_POST['suicide_text']) && strlen($_POST['suicide_text']) > 1) $text = $_POST['suicide_text'];
 else 
@@ -59,7 +65,7 @@ if ($atpos) {
 
 if ($_POST['suicide']) {
 	$page_type = 1;
-	$message = $_SESSION['display_name']. ": AGORA: EMERGENCY - SUICIDE IN PROGRESS: ";
+	$message = $_SESSION['display_name']. ": AGORA: EMERGENCY HELP NEEDED: ";
 	if (isset($_POST['suicide_text'])) $message .= $text;
 	$pager_1 = "+1".$settings['page_email_emergencies'];
     $pager_2 = "+1".$settings['page_email_emergencies_2'];
@@ -73,27 +79,10 @@ if ($_POST['help']) {
     $pager_2 = "+1".$settings['page_email_information_2'];
 }
 
-
-
-//echo "<br>|".$pager_1."|".$pager_2."|".$message."<br>"; die;
-
-
-//$pager_1 = "+17602624628";
-//$pager_2 = "+15053073491";
-
 require __DIR__ . '/vendor/autoload.php';
 
 // Use the REST API Client to make requests to the Twilio REST API
 use Twilio\Rest\Client;
-
-// Your Account SID and Auth Token from twilio.com/console
-$account_sid = 'ACbb76c0488e1d11843db66e0642d534dc';
-$auth_token = '6ede6d2b8eab3fbdd53433a6ca68f78d';
-// In production, these should be environment variables. E.g.:
-// $auth_token = $_ENV["TWILIO_ACCOUNT_SID"]
-
-// A Twilio number you own with SMS capabilities
-$twilio_number = "+15052073240";
 
 $client = new Client($account_sid, $auth_token);
 $client->messages->create(
