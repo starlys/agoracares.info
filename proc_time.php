@@ -45,37 +45,37 @@ if (isset ($_POST['start_shift'])) {
 	$add_res = mysqli_query($db, $add_qry);
 	if (!$add_res) db_error ("proc_time 2",$add_qry);
 	$message = $_SESSION['display_name']." started shift. ";
-		$subject = "NOTICE: ".$_SESSION['display_name']." started shift.";
-		email_admins ($message, $subject, '4');
-
+	$subject = "NOTICE: ".$_SESSION['display_name']." started shift.";
+	email_admins ($message, $subject, '4');
 	redirect ('page_shift_started.php');
 }
-if (isset ($_POST['extra_hours'])) {
-	    $time_claimed = $_POST['hours'] * 60;
-		$display_date = $_POST['display_date'];
-		
-		if (strlen ($display_date) < 6) $display_date = date ('m/d/y',time());
-		$time_qry = "insert into time_log (user_num, entered_by, start_timestamp, display_date, time_in_mins, reason_code,
-										   entry_time, activity_type, entry_status, notes)
-		             values
-					 ('".$_SESSION['current_user_num']."',
-					  '".$_SESSION['current_user_num']."',		
-					  '".time()."',			
-					  '".$display_date."',
-					  '".$time_claimed."',
-					  '0',
-					  '".time()."',		
-					  '".$_POST['activity']."',				
-					  '0',
-					  '".safe_sql($_POST['note'])."')";	
 
-		$time_res = mysqli_query($db, $time_qry);
-		if (!$time_res) db_error ('proc time 3',$time_res);
-		
-		$message = $_SESSION['display_name']." has recorded extra hours. You must approve these hours before they will be added to the total for this volunteer.";
-		$subject = "NOTICE: ".$_SESSION['display_name']." has recorded extra hours.";
-		email_admins ($message, $subject, '1');
-		redirect ('page_extra_hours.php');
+if (isset ($_POST['extra_hours'])) {
+	$time_claimed = $_POST['hours'] * 60;
+	$display_date = $_POST['display_date'];
+	
+	if (strlen ($display_date) < 6) $display_date = date ('m/d/y',time());
+	$time_qry = "insert into time_log (user_num, entered_by, start_timestamp, display_date, time_in_mins, reason_code,
+										entry_time, activity_type, entry_status, notes)
+					values
+					('".$_SESSION['current_user_num']."',
+					'".$_SESSION['current_user_num']."',		
+					'".time()."',			
+					'".$display_date."',
+					'".$time_claimed."',
+					'0',
+					'".time()."',		
+					'".$_POST['activity']."',				
+					'0',
+					'".safe_sql($_POST['note'])."')";	
+
+	$time_res = mysqli_query($db, $time_qry);
+	if (!$time_res) db_error ('proc time 3',$time_res);
+	
+	$message = $_SESSION['display_name']." has recorded extra hours. You must approve these hours before they will be added to the total for this volunteer.";
+	$subject = "NOTICE: ".$_SESSION['display_name']." has recorded extra hours.";
+	email_admins ($message, $subject, '1');
+	redirect ('page_extra_hours.php');
 }
 ?>
 
