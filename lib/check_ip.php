@@ -9,6 +9,6 @@ if (!$ip_res) {
 }
 $_SESSION['in_center'] = mysqli_num_rows ($ip_res);
 
-//DEBUG: $_SESSION['in_center'] = true;
+ $_SESSION['in_center'] = true;
 }
 ?>

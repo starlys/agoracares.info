@@ -1,14 +1,17 @@
 <?php
 function email_admins ($message, $subject, $type=1) {
+global $db;
 //type 1 = all admins, 2=emergencies, 3=information, 4=shift
 require_once 'opendb.php';
 require_once 'email_error.php';
 require_once 'safe_sql.php';
 $sender_email = "admin@agoracares.org";
 $admin_qry = "select * from settings";
+//echo '<hr/>DEBUG SLF: 1a';
 $admin_res = mysqli_query($db, $admin_qry);
 if (!$admin_res) db_error ('email_admins', $admin_qry);
 $settings=mysqli_fetch_array ($admin_res);
+//echo '<hr/>DEBUG SLF: 1b';
 
 switch ($type) {
 	case 1: if (strlen ($settings['email_admin_1']) > 1) {
@@ -56,15 +59,19 @@ switch ($type) {
 			break;
 	
 	case 4: if (strlen ($settings['page_email_shift']) > 1) {
+				//echo '<hr/>DEBUG SLF: 2';
 				$to = $settings['page_email_shift'];
 				//$to = "agorasmspage@gmail.com"; //temporary redirection
+				//echo '<hr/>DEBUG SLF: 2b:' . $to;
 				mail ($to, $subject, $message, "FROM: agoraadmin@donotreply.com");
 				}
 			if (strlen ($settings['page_email_shift_2']) > 1) {
 				$to = $settings['page_email_shift_2'];
 				//$to = "agorasmspage@gmail.com"; //temporary redirection
-				mail ($to, $subject, $message, "FROM: agoraadmin@donotreply.com");
-				}
+				//echo '<hr/>DEBUG SLF: 2c:' . $to;
+				$ok = mail ($to, $subject, $message, "FROM: agoraadmin@donotreply.com");
+				//echo '<hr/>DEBUG SLF: 3:' . $ok;
+			}
 			break;
 			
 	case 5:  $to = "abqdan@gmail.com";
@@ -90,7 +97,7 @@ if ($type==2 || $type==3) {
 				")";
 		$log_res = mysqli_query($db, $log_qry);
 		if (!$log_res) db_error ('email admins 2',$log_qry);
-}
+	}
 }
 ?>
 
